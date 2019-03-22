@@ -10,9 +10,11 @@ import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
 import sx.blah.discord.handle.obj.IChannel;
 
+@Slf4j
 public class HealthCheckRunner extends AbstractScheduledService {
 
     private static HealthCheckRunner instance;
@@ -38,7 +40,7 @@ public class HealthCheckRunner extends AbstractScheduledService {
             BotUtils.sendMessage(this.discordChannel,
                     "PC OK ! [" + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")) + "]");
         } else {
-            System.out.println("FATAL - PC can not do simple operation !!!");
+            log.error("FATAL - PC can not do simple operation !!!");
         }
     }
 
@@ -54,9 +56,9 @@ public class HealthCheckRunner extends AbstractScheduledService {
         WebTarget pingWebTarget = webTarget.path("info/ping");
 
         Response response = pingWebTarget.request(MediaType.APPLICATION_JSON).get();
-        Ping ping = response.readEntity(Ping.class);
+        //Ping ping = response.readEntity(Ping.class);
 
-        return HttpStatus.SC_OK == response.getStatus() && ping.isOK();
+        return HttpStatus.SC_OK == response.getStatus();
     }
 
 }
