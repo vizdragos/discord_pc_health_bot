@@ -2,6 +2,7 @@ package com.pchealth;
 
 import com.google.common.util.concurrent.AbstractScheduledService;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.concurrent.TimeUnit;
 import sx.blah.discord.handle.obj.IChannel;
 
@@ -19,7 +20,7 @@ public class HealthCheckRunner extends AbstractScheduledService {
 
     @Override
     protected void runOneIteration() throws Exception {
-        BotUtils.sendMessage(this.discordChannel , "PC OK ! [" + LocalDateTime.now() + "]");
+        BotUtils.sendMessage(this.discordChannel , "PC OK ! [" + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")) + "]");
     }
 
     @Override

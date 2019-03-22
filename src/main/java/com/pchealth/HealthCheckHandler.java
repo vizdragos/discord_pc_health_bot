@@ -37,6 +37,14 @@ public class HealthCheckHandler {
             }
         });
 
+        commandMap.put("clear", (event, args) -> {
+            event.getChannel().bulkDelete();
+        });
+
+        commandMap.put("status", (event, args) -> {
+            HealthCheckRunner healthCheckRunner = HealthCheckRunner.getInstance();
+            BotUtils.sendMessage(event.getChannel(), healthCheckRunner.isRunning() ? "Running" : "Not Running");
+        });
     }
 
     @EventSubscriber
